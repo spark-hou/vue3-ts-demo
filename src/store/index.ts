@@ -3,12 +3,19 @@
  * @date 2021-04-14 22:02
  * @Description:
  */
-import {createStore} from 'vuex'
+import {createStore, Store, useStore as baseUseStore} from 'vuex'
+import {InjectionKey,} from 'vue'
 import user from './module/user'
+import RootState from './interface'
 
-const store = createStore({
+export const store = createStore<RootState>({
     modules: {
         user
     }
 })
-export default store
+export const key: InjectionKey<Store<RootState>> = Symbol('vue-store');
+
+export function useStore() {
+    return baseUseStore(key)
+}
+

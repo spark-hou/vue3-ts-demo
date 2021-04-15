@@ -6,19 +6,28 @@
 <template>
   <div class="User">
     {{user.name}}
-    <br>
+    <br/>
     <button @click="user.setUserName('hahaha')">修改用户名</button>
-    <br>
+    <br/>
     {{user.getUserName()}}
-    <br>
+    <br/>
     计算属性：姓名反转{{nameReverse}}
-    <br>
+    <br/>
     ref:{{count}}
+    <br/>
+    vuex
+    <br/>
+    state:{{store.state.user.count}}
+    <br/>
+    getter:{{getCount}}
+    <br/>
+    <button @click="upCount()">操作vuex</button>
   </div>
 </template>
 
 <script lang="ts">
     import {defineComponent, reactive, ref, computed} from 'vue';
+    import {useStore} from '@/store'
 
     interface User {
         userName: string,
@@ -58,11 +67,23 @@
             let nameReverse = computed((): string => {
                 return user.userName.split('').reverse().join('')
             })
-            return {user, count, nameReverse}
+
+            //vuex
+            const store = useStore()
+            const getCount = computed(() => store.state.user.count)
+            const upCount = () => {
+                store.dispatch('user/upCount', 1)
+            }
+
+            return {user, count, nameReverse, getCount, upCount, store}
         }
     });
 </script>
 
-<style>
-
+<style lang="scss">
+  .User {
+    button {
+      outline: none;
+    }
+  }
 </style>

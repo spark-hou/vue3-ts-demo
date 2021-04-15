@@ -6,6 +6,7 @@
 <template>
   <div>
     <button @click="goUser">goUser</button>
+    <router-link to="/provider">goProvider</router-link>
   </div>
 </template>
 
