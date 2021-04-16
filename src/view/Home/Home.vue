@@ -6,10 +6,12 @@
 <template>
   <div>
     <button @click="goUser">goUser</button>
+    <router-link to="/provider">goProvider</router-link>
     <br/>
     <button @click="provider.getDemo({id:1,str:'asdasd'})">模拟get请求</button>
     <button @click="provider.postDemo({id:1,str:'asdasd'})">模拟post请求</button>
-    <router-link to="/provider">goProvider</router-link>
+    <br/>
+    <div class="less">less</div>
   </div>
 </template>
 
@@ -30,6 +32,8 @@
   });
 </script>
 
-<style>
-
+<style lang="less">
+  .less {
+    color: @color-red;
+  }
 </style>

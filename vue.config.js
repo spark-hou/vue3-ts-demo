@@ -1,6 +1,29 @@
 const path = require('path')
 const UglifyPlugin = require('uglifyjs-webpack-plugin')
 const CompressionPlugin = require("compression-webpack-plugin")
+const AntDesignThemePlugin = require("antd-theme-webpack-plugin");
+
+
+const options = {
+  antDir: path.join(__dirname, "./node_modules/ant-design-vue"), //antd包位置
+  stylesDir: path.join(__dirname, "./src/styles/theme"), //主题文件所在文件夹
+  varFile: path.join(__dirname, "./src/styles/theme/variables.less"), // 自定义默认的主题色
+  mainLessFile: path.join(__dirname, "./src/styles/theme/index.less"), // 项目中其他自定义的样式（如果不需要动态修改其他样式，该文件可以为空）
+  outputFilePath: path.join(__dirname, "./public/color.less"), //提取的less文件输出到什么地方
+  themeVariables: ["@primary-color"], //要改变的主题变量
+  indexFileName: "./public/index.html", // index.html所在位置
+  generateOnce: false // 是否只生成一次（if you don't want to generate color.less on each chnage in code to make build process fast in development mode, assign it true value. But if you have new changes in your styles, you need to re-run your build process npm start.）
+};
+
+function addStyleResource(rule) {
+  rule.use('style-resource')
+    .loader('style-resources-loader')
+    .options({
+      patterns: [
+        path.resolve(__dirname, './src/assets/css/global.less'),
+      ],
+    })
+}
 
 module.exports = {
   publicPath: './', // 基本路径
@@ -8,7 +31,6 @@ module.exports = {
   filenameHashing: true, // 生成的静态资源在它们的文件名中包含了 hash 以便更好的控制缓存
   lintOnSave: false, // eslint-loader 是否在保存的时候检查
   productionSourceMap: true, // 生产环境是否生成 sourceMap 文件
-
   chainWebpack: config => {
     // 开启图片压缩
     config.module.rule('images')
@@ -34,8 +56,13 @@ module.exports = {
           deleteOriginalAssets: false // 不删除源文件
         }))
     }
-  },
+    //配置全局less变量
+    const types = ['vue-modules', 'vue', 'normal-modules', 'normal']
+    types.forEach(type => addStyleResource(config.module.rule('less').oneOf(type)))
 
+    config.plugin('themePlugin')
+      .use(new AntDesignThemePlugin(options))
+  },
   configureWebpack: (config) => {
     if (process.env.NODE_ENV === 'production') {
       // 为生产环境修改配置...
@@ -60,7 +87,6 @@ module.exports = {
             }
           }
         },
-
         // 移除console
         minimizer: [new UglifyPlugin({
           uglifyOptions: {
@@ -79,6 +105,16 @@ module.exports = {
     } else {
       // 为开发环境修改配置...
       config.mode = 'development'
+    }
+  },
+  css: {
+    loaderOptions: {
+      less: {
+        // 属性值包裹在lessOptions内
+        lessOptions: {
+          javascriptEnabled: true,
+        }
+      }
     }
   },
   // webpack-dev-server 相关配置
