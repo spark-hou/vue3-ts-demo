@@ -10,7 +10,7 @@ const options = {
   varFile: path.join(__dirname, "./src/styles/theme/variables.less"), // 自定义默认的主题色
   mainLessFile: path.join(__dirname, "./src/styles/theme/index.less"), // 项目中其他自定义的样式（如果不需要动态修改其他样式，该文件可以为空）
   outputFilePath: path.join(__dirname, "./public/color.less"), //提取的less文件输出到什么地方
-  themeVariables: ["@primary-color"], //要改变的主题变量
+  themeVariables: ["@primary-color", "@theme"], //要改变的主题变量
   indexFileName: "./public/index.html", // index.html所在位置
   generateOnce: false // 是否只生成一次（if you don't want to generate color.less on each chnage in code to make build process fast in development mode, assign it true value. But if you have new changes in your styles, you need to re-run your build process npm start.）
 };
@@ -20,7 +20,7 @@ function addStyleResource(rule) {
     .loader('style-resources-loader')
     .options({
       patterns: [
-        path.resolve(__dirname, './src/assets/css/global.less'),
+        path.resolve(__dirname, './src/styles/global.less'),
       ],
     })
 }
@@ -59,7 +59,7 @@ module.exports = {
     //配置全局less变量
     const types = ['vue-modules', 'vue', 'normal-modules', 'normal']
     types.forEach(type => addStyleResource(config.module.rule('less').oneOf(type)))
-
+    //antd动态样式
     config.plugin('themePlugin')
       .use(new AntDesignThemePlugin(options))
   },
