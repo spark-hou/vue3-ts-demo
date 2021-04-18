@@ -4,7 +4,9 @@
  * @Description:
  */
 import UserType from '@/store/module/user/interface'
+import ThemeType from '@/store/module/theme/interface'
 
 export default interface RootState {
-    user: UserType
+  user: UserType,
+  theme: ThemeType
 }
