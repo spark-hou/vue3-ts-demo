@@ -1,15 +1,17 @@
 <template>
   <div class="App" :class="theme">
-    父级的topData{{topData}}
-    <br/>
-    父级的topData2{{topData2}}
-    <br/>
-    父级的topData3{{topData3.name}}
-    <br/>
-    <button @click="changTopData()">修改父级的父级的topData</button>
-    <a-button @click="openNotification()" type="primary">Primary</a-button>
-    <a-switch checked-children="明" un-checked-children="暗" v-model:checked="checked"/>
-    <router-view/>
+    <div class="g-bgColor">
+      父级的topData{{topData}}
+      <br/>
+      父级的topData2{{topData2}}
+      <br/>
+      父级的topData3{{topData3.name}}
+      <br/>
+      <button @click="changTopData()">修改父级的父级的topData</button>
+      <a-button @click="openNotification()" type="primary">Primary</a-button>
+      <a-switch checked-children="明" un-checked-children="暗" v-model:checked="checked"/>
+      <router-view/>
+    </div>
   </div>
 </template>
 

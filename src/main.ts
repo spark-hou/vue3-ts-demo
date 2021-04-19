@@ -4,6 +4,8 @@ import route from './router'
 import {store, key} from '@/store'
 import antd from '@/plugin/antd'
 import 'ant-design-vue/dist/antd.css';
+import '@/styles/theme/dark.less';
+import '@/styles/theme/light.less';
 
 const app = createApp(App)
 app.use(route)
