@@ -5,6 +5,7 @@
 */
 <template>
   <div>
+    <img src="../../assets/img/11.png" alt=""/>
     <button @click="goUser">goUser</button>
     <router-link to="/provider">goProvider</router-link>
     <br/>

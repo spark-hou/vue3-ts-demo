@@ -41,11 +41,11 @@ module.exports = {
         limit: 10240    // 图片小于10k转为base64,默认4k
       })
       .end()
-      // .test(/\.(png|jpe?g|gif|svg)(\?.*)?$/)
-      // .use('image-webpack-loader')
-      // .loader('image-webpack-loader')
-      // .options({bypassOnDebug: true})
-      // .end()
+    // .test(/\.(png|jpe?g|gif|svg)(\?.*)?$/)
+    // .use('image-webpack-loader')
+    // .loader('image-webpack-loader')
+    // .options({bypassOnDebug: true})
+    // .end()
 
     // 开启js、css压缩
     if (process.env.NODE_ENV === 'production') {
