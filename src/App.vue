@@ -52,6 +52,9 @@
       // 切换主题
       let checked = ref<boolean>(true)
       let theme = computed(() => store.state.theme.type)
+      watch(theme, (val) => {
+        console.log(val,'theme')
+      })
       watch(checked, (val) => {
         if (val) {
           store.dispatch('theme/changeType', 'light')
@@ -59,6 +62,7 @@
           store.commit('theme/CHANGE_TYPE', 'dark')
         }
       })
+
       return {
         topData,
         topData2,

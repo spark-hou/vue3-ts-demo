@@ -53,9 +53,10 @@
 </template>
 
 <script lang="ts">
-  import {defineComponent} from 'vue';
+  import {defineComponent, computed, watch} from 'vue';
   import {useRouter} from 'vue-router'
   import provider from './provider'
+  import {useStore} from '@/store'
 
   export default defineComponent({
     name: 'Home',
@@ -69,6 +70,12 @@
           "@primary-color": primaryColor
         });
       }
+      //
+      let store = useStore()
+      let theme = computed(() => store.state.theme.type)
+      watch(theme, (val) => {
+        console.log(val, 'theme222')
+      })
       return {goUser, provider, changeTheme}
     }
   });
